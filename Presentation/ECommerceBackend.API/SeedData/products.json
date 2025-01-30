@@ -1,164 +1,56 @@
 [
   {
-    "Name": "Apple iPhone 13 Pro Max",
+    "Name": "Children Bookcase",
     "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
     "Price": 200,
-    "PictureUrl": "/images/products/sb-ang1.png",
-    "Type": "Smartphone",
-    "Brand": "Apple",
+    "PictureUrl": "/images/products/children.jpg",
+    "Type": "Children",
+    "Brand": "Ikea",
     "QuantityInStock": 82
   },
   {
-    "Name": "Samsung Galaxy S21 Ultra",
+    "Name": "Modern Bookcase",
     "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
     "Price": 150,
-    "PictureUrl": "/images/products/sb-ang2.png",
-    "Type": "Smartphone",
-    "Brand": "Samsung",
+    "PictureUrl": "/images/products/modern.jpg",
+    "Type": "Modern",
+    "Brand": "Tjena",
     "QuantityInStock": 75
   },
   {
-    "Name": "Dell XPS 15 9500",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 180,
-    "PictureUrl": "/images/products/sb-core1.png",
-    "Type": "Laptop",
-    "Brand": "Dell",
-    "QuantityInStock": 3
-  },
-  {
-    "Name": "MacBook Pro 16-inch 2021",
+    "Name": "Decorative Bookcase",
     "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
     "Price": 300,
-    "PictureUrl": "/images/products/sb-core2.png",
-    "Type": "Laptop",
-    "Brand": "Apple",
+    "PictureUrl": "/images/products/decorative.jpg",
+    "Type": "Decorative",
+    "Brand": "Baggego",
     "QuantityInStock": 52
   },
   {
-    "Name": "Google Pixel 6 Pro",
+    "Name": "Glass Bookcase",
     "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
     "Price": 250,
-    "PictureUrl": "/images/products/sb-react1.png",
-    "Type": "Smartphone",
-    "Brand": "Google",
+    "PictureUrl": "/images/products/glass.jpg",
+    "Type": "Glass",
+    "Brand": "portvakt",
     "QuantityInStock": 97
   },
   {
-    "Name": "Microsoft Surface Laptop 4",
+    "Name": "Children Bookcase",
     "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
     "Price": 120,
-    "PictureUrl": "/images/products/sb-ts1.png",
-    "Type": "Laptop",
-    "Brand": "Microsoft",
+    "PictureUrl": "/images/products/children2.jpg",
+    "Type": "Children",
+    "Brand": "Lazzoni",
     "QuantityInStock": 37
   },
   {
-    "Name": "Beats Studio3 Wireless Headphones",
-    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 10,
-    "PictureUrl": "/images/products/hat-core1.png",
-    "Type": "Headphones",
-    "Brand": "Beats",
-    "QuantityInStock": 32
-  },
-  {
-    "Name": "Sony WH-1000XM4",
+    "Name": "Wooden Bookcase",
     "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
     "Price": 8,
-    "PictureUrl": "/images/products/hat-react1.png",
-    "Type": "Headphones",
-    "Brand": "Sony",
+    "PictureUrl": "/images/products/wooden.jpg",
+    "Type": "Wooden",
+    "Brand": "Ikea",
     "QuantityInStock": 6
-  },
-  {
-    "Name": "Logitech MX Master 3 Mouse",
-    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 15,
-    "PictureUrl": "/images/products/hat-react2.png",
-    "Type": "Mouse",
-    "Brand": "Logitech",
-    "QuantityInStock": 17
-  },
-  {
-    "Name": "Apple Magic Keyboard",
-    "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-    "Price": 18,
-    "PictureUrl": "/images/products/glove-code1.png",
-    "Type": "Keyboard",
-    "Brand": "Apple",
-    "QuantityInStock": 74
-  },
-  {
-    "Name": "Razer Huntsman Mini Keyboard",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 15,
-    "PictureUrl": "/images/products/glove-code2.png",
-    "Type": "Keyboard",
-    "Brand": "Razer",
-    "QuantityInStock": 19
-  },
-  {
-    "Name": "SteelSeries Arctis 7 Wireless",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
-    "Price": 16,
-    "PictureUrl": "/images/products/glove-react1.png",
-    "Type": "Headphones",
-    "Brand": "SteelSeries",
-    "QuantityInStock": 77
-  },
-  {
-    "Name": "JBL Quantum One Gaming Headset",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 14,
-    "PictureUrl": "/images/products/glove-react2.png",
-    "Type": "Headphones",
-    "Brand": "JBL",
-    "QuantityInStock": 45
-  },
-  {
-    "Name": "Samsung Galaxy Buds Pro",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 250,
-    "PictureUrl": "/images/products/boot-redis1.png",
-    "Type": "Headphones",
-    "Brand": "Samsung",
-    "QuantityInStock": 49
-  },
-  {
-    "Name": "Corsair K95 RGB Platinum XT",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 189.99,
-    "PictureUrl": "/images/products/boot-core2.png",
-    "Type": "Keyboard",
-    "Brand": "Corsair",
-    "QuantityInStock": 28
-  },
-  {
-    "Name": "Logitech G Pro X Keyboard",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 199.99,
-    "PictureUrl": "/images/products/boot-core1.png",
-    "Type": "Keyboard",
-    "Brand": "Logitech",
-    "QuantityInStock": 69
-  },
-  {
-    "Name": "Alienware Aurora R13 Gaming PC",
-    "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-    "Price": 150,
-    "PictureUrl": "/images/products/boot-ang2.png",
-    "Type": "Gaming PC",
-    "Brand": "Alienware",
-    "QuantityInStock": 35
-  },
-  {
-    "Name": "HP Omen 30L Gaming Desktop",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 180,
-    "PictureUrl": "/images/products/boot-ang1.png",
-    "Type": "Gaming PC",
-    "Brand": "HP",
-    "QuantityInStock": 27
   }
 ]
