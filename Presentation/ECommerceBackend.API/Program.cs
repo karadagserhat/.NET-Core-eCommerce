@@ -1,5 +1,6 @@
 using ECommerceBackend.API.Middleware;
 using ECommerceBackend.Application;
+using ECommerceBackend.Infrastructure;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using Infrastructure.Data;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
 builder.Services.AddCors();
 
