@@ -131,6 +131,15 @@ $darkTheme: mat.m2-define-dark-theme(
   }
 }
 
+.splash-screen {
+  @apply flex items-center justify-center h-screen;
+  background-color: mat.m2-get-color-from-palette($light-background, default);
+}
+
+.dark-theme .splash-screen {
+  background-color: mat.m2-get-color-from-palette($dark-background, default);
+}
+
 .mdc-button,
 .mdc-raised-button,
 .mdc-stroked-button,
