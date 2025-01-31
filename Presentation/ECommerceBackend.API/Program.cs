@@ -1,5 +1,6 @@
 using ECommerceBackend.API.Middleware;
 using ECommerceBackend.Application;
+using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Infrastructure;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
@@ -19,6 +20,17 @@ builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            })
+    .AddEntityFrameworkStores<ECommerceBackendDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,10 +42,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod()
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<AppUser>(); // api/login
 
 try
 {

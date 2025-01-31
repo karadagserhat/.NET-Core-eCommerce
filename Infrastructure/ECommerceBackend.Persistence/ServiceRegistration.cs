@@ -17,6 +17,8 @@ public static class ServiceRegistration
 
     services.AddScoped<IProductRepository, ProductRepository>();
     services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddScoped<IAccountService, AccountService>();
+    services.AddHttpContextAccessor();
 
   }
 }
