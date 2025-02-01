@@ -17,6 +17,8 @@ internal class UpdateCartCommandHandler(ICartService cartService) : IRequestHand
         {
             Id = request.Id,
             Items = request.Items,
+            ClientSecret = request.ClientSecret,
+            PaymentIntentId = request.PaymentIntentId,
         };
 
         var updatedCart = await _cartService.SetCartAsync(shoppingCart) ?? throw new CartUpdateFailedException("Problem with cart");
@@ -34,6 +36,8 @@ internal class UpdateCartCommandHandler(ICartService cartService) : IRequestHand
                 Brand = item.Brand,
                 Type = item.Type
             }).ToList(),
+            ClientSecret = updatedCart.ClientSecret,
+            PaymentIntentId = updatedCart.PaymentIntentId,
         };
     }
 }

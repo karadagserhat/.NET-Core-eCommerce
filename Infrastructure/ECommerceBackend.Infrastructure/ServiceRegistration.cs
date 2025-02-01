@@ -18,6 +18,8 @@ public static class ServiceRegistration
         });
 
         services.AddSingleton<ICartService, CartService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+
 
     }
 }

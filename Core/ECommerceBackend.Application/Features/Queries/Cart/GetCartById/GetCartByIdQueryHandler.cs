@@ -33,6 +33,8 @@ internal class GetCartByIdQueryHandler(ICartService cartService) : IRequestHandl
                 Brand = item.Brand,
                 Type = item.Type
             }).ToList(),
+            ClientSecret = cart.ClientSecret,
+            PaymentIntentId = cart.PaymentIntentId,
         };
     }
 }

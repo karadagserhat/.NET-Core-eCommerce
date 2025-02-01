@@ -1,8 +1,8 @@
-﻿using ECommerceBackend.Domain.Entities;
+using ECommerceBackend.Domain.Entities;
 
-namespace ECommerceBackend.Application.Features.Queries.Cart.GetCartById;
+namespace ECommerceBackend.Application.Features.Commands.Payment.CreateOrUpdatePaymentIntent;
 
-public class GetCartByIdQueryResponse
+public class CreateOrUpdatePaymentIntentCommandResponse
 {
     public required string Id { get; set; }
     public List<CartItem> Items { get; set; } = [];
