@@ -7,7 +7,6 @@ import { inject } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { SnackbarService } from '../services/snackbar.service';
-
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const snackbar = inject(SnackbarService);

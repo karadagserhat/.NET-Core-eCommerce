@@ -12,6 +12,7 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
     public async Task<AddressDto> CreateOrUpdateAddress(AddressDto addressDto)
     {
         var user = await signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
+
         if (user.Address == null)
         {
             user.Address = addressDto.ToEntity();
@@ -20,7 +21,9 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
         {
             user.Address.UpdateFromDto(addressDto);
         }
+
         var result = await signInManager.UserManager.UpdateAsync(user);
+
         if (!result.Succeeded)
             throw new Exception("Problem updating user address");
         return user.Address.ToDto()!;
@@ -29,6 +32,7 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
     public GetAuthStateDTO GetAuthState()
     {
         var isAuthenticated = httpContextAccessor.HttpContext.User.Identity?.IsAuthenticated ?? false;
+
         return new GetAuthStateDTO
         {
             IsAuthenticated = isAuthenticated
@@ -38,7 +42,9 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
     public async Task<GetUserInfoDTO> GetUserInfoAsync()
     {
         if (httpContextAccessor.HttpContext.User.Identity?.IsAuthenticated == false) return null!;
+
         var user = await signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
+
         return new GetUserInfoDTO
         {
             FirstName = user.FirstName,
@@ -62,13 +68,23 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
             Email = registerDto.Email,
             UserName = registerDto.Email
         };
+
         var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
+
         RegisterUserResponseDTO response = new() { Succeeded = result.Succeeded };
+
         if (result.Succeeded)
-            response.Message = "Kullanıcı başarıyla oluşturulmuştur.";
+        {
+            await signInManager.SignInAsync(user, isPersistent: false);
+
+            response.Message = "Registration successfully.";
+        }
         else
+        {
             foreach (var error in result.Errors)
                 response.Message += $"{error.Code} - {error.Description}\n";
+        }
+
         return response;
     }
 }

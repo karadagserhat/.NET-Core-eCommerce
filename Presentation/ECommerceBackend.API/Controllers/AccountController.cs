@@ -39,7 +39,7 @@ public class AccountController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet]
+    [HttpGet("auth-status")]
     public async Task<ActionResult> GetAuthState()
     {
         GetAuthStateQueryResponse response = await _mediator.Send(new GetAuthStateQueryRequest());

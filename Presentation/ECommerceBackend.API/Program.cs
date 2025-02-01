@@ -1,4 +1,4 @@
-using ECommerceBackend.API.Middleware;
+using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Infrastructure;
@@ -40,7 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
+app.ConfigureExceptionHandler();
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
