@@ -1,6 +1,8 @@
-﻿using ECommerceBackend.Application.Abstractions.Services;
+﻿using ECommerceBackend.Application.Abstractions.Hubs;
+using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Infrastructure.Helpers;
 using ECommerceBackend.Infrastructure.Services;
+using ECommerceBackend.Infrastructure.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -23,6 +25,9 @@ public static class ServiceRegistration
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+
+        services.AddTransient<IProductHubService, ProductHubService>();
+        services.AddSignalR();
 
     }
 }

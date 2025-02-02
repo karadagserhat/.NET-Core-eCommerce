@@ -15,6 +15,7 @@ using Serilog.Sinks.MSSqlServer;
 using Microsoft.AspNetCore.HttpLogging;
 using System.Collections.ObjectModel;
 using ECommerceBackend.API.Configurations.ColumnWriters;
+using ECommerceBackend.Infrastructure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,6 +121,8 @@ app.Use(async (context, next) =>
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>(); // api/login
+
+app.MapHubs();
 
 try
 {
