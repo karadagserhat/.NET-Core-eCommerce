@@ -3,6 +3,7 @@ import { authGuard } from '../../core/guards/auth.guard';
 import { emptyCartGuard } from '../../core/guards/empty-cart.guard';
 import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 import { CheckoutComponent } from './checkout.component';
+
 export const checkoutRoutes: Route[] = [
   {
     path: '',
