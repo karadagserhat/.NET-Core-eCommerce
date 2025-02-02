@@ -22,5 +22,7 @@ public static class ServiceRegistration
         services.AddSingleton<ICartService, CartService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+
     }
 }

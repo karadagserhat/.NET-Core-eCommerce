@@ -1,3 +1,4 @@
+using ECommerceBackend.API.RequestHelpers;
 using ECommerceBackend.Application.DTOs;
 using ECommerceBackend.Application.Features.Commands.Product.AddPhoto;
 using ECommerceBackend.Application.Features.Commands.Product.CreateProduct;
@@ -21,6 +22,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
 {
   readonly IMediator _mediator = mediator;
 
+  [Cache(600)]
   [HttpGet]
   public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
   {
@@ -36,6 +38,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
 
   }
 
+  [InvalidateCache("api/products|")]
   [Authorize(Roles = "Admin")]
   [HttpPost]
   public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductCommandRequest createProductCommandRequest)
@@ -44,6 +47,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
+  [InvalidateCache("api/products|")]
   [Authorize(Roles = "Admin")]
   [HttpPut("{id:int}")]
   public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
@@ -52,6 +56,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok();
   }
 
+  [InvalidateCache("api/products|")]
   [Authorize(Roles = "Admin")]
   [HttpDelete("{id:int}")]
   public async Task<ActionResult> DeleteProduct([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
@@ -60,6 +65,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok();
   }
 
+  [Cache(10000)]
   [HttpGet("brands")]
   public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
   {
@@ -68,6 +74,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
 
   }
 
+  [Cache(10000)]
   [HttpGet("types")]
   public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
   {
@@ -75,6 +82,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
+  [InvalidateCache("api/products|")]
   [Authorize(Roles = "Admin")]
   [HttpPut("update-stock/{productId}")]
   public async Task<ActionResult> UpdateStock([FromBody] UpdateStockCommandRequest updateStockCommandRequest)
@@ -83,6 +91,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
+  [InvalidateCache("api/products|")]
   [Authorize(Roles = "Admin")]
   [HttpPost("add-photo")]
   public async Task<ActionResult<PhotoDTO>> AddPhoto([FromQuery] AddPhotoCommandRequest addPhotoCommandRequest)
