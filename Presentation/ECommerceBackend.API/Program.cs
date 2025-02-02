@@ -8,6 +8,13 @@ using ECommerceBackend.Persistence.Contexts;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Context;
+using Serilog.Core;
+using Serilog.Sinks.MSSqlServer;
+using Microsoft.AspNetCore.HttpLogging;
+using System.Collections.ObjectModel;
+using ECommerceBackend.API.Configurations.ColumnWriters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +26,52 @@ builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection(
 
 builder.Services.AddControllers();
 builder.Services.AddCors();
+
+var columnOptions = new ColumnOptions
+{
+    AdditionalColumns = new Collection<SqlColumn>
+    {
+        new SqlColumn
+        {
+            ColumnName = "UserName",
+            DataType = System.Data.SqlDbType.NVarChar,
+            DataLength = 50,
+            AllowNull = true,
+        }
+    }
+};
+
+columnOptions.Store.Remove(StandardColumn.Properties);
+columnOptions.Store.Add(StandardColumn.LogEvent);
+
+Logger log = new LoggerConfiguration()
+  .WriteTo.Console()
+  .WriteTo.File("logs/log.txt")
+ .WriteTo.MSSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+           sinkOptions: new MSSqlServerSinkOptions
+           {
+               TableName = "logs",
+               AutoCreateSqlTable = true
+           },
+        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information,
+        columnOptions: columnOptions)
+    .WriteTo.Seq(builder.Configuration["Seq:ServerURL"]!)
+    .Enrich.FromLogContext()
+    .Enrich.With<CustomUserNameColumn>()
+    .MinimumLevel.Information()
+  .CreateLogger();
+
+builder.Host.UseSerilog(log);
+
+builder.Services.AddHttpLogging(logging =>
+{
+    logging.LoggingFields = HttpLoggingFields.All;
+    logging.RequestHeaders.Add("sec-ch-ua");
+    logging.MediaTypeOptions.AddText("application/javascript");
+    logging.RequestBodyLogLimit = 4096;
+    logging.ResponseBodyLogLimit = 4096;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -45,10 +98,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.ConfigureExceptionHandler();
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
+
+app.UseSerilogRequestLogging();
+app.UseHttpLogging();
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
+
+
+app.Use(async (context, next) =>
+{
+    var username = context.User?.Identity?.IsAuthenticated == true
+        ? context.User.Identity.Name
+        : "Anonymous";
+    using (LogContext.PushProperty("UserName", username))
+    {
+        await next();
+    }
+});
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>(); // api/login

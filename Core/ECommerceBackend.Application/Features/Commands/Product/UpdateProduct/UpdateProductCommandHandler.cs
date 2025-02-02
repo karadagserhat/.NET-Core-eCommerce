@@ -1,12 +1,14 @@
 ﻿using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.Exceptions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace ECommerceBackend.Application.Features.Commands.Product.UpdateProduct;
 
-public class UpdateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateProductCommandRequest, UpdateProductCommandResponse>
+public class UpdateProductCommandHandler(IUnitOfWork unitOfWork, ILogger<UpdateProductCommandHandler> logger) : IRequestHandler<UpdateProductCommandRequest, UpdateProductCommandResponse>
 {
     readonly IUnitOfWork _unitOfWork = unitOfWork;
+    readonly ILogger<UpdateProductCommandHandler> _logger = logger;
 
     public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
     {
@@ -21,6 +23,8 @@ public class UpdateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
         product.Description = request.Description;
 
         await _unitOfWork.Complete();
+
+        _logger.LogInformation("Product UPDATED!!!!");
 
         return new();
     }
