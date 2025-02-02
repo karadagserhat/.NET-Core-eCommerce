@@ -4,6 +4,7 @@ using ECommerceBackend.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceBackend.Persistence.Migrations
 {
     [DbContext(typeof(ECommerceBackendDbContext))]
-    partial class ECommerceBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250202070500_mig_5_PhotoCloudinary")]
+    partial class mig_5_PhotoCloudinary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

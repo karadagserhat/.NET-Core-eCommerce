@@ -12,6 +12,8 @@ import { firstValueFrom } from 'rxjs';
 import { DialogService } from '../../../core/services/dialog.service';
 import { Router } from '@angular/router';
 import { UpdateQuantityComponent } from '../update-quantity/update-quantity.component';
+import { ProductPhotoComponent } from '../product-photo/product-photo.component';
+
 @Component({
   selector: 'app-admin-catalog',
   standalone: true,
@@ -26,8 +28,10 @@ export class AdminCatalogComponent {
   private adminService = inject(AdminService);
   private dialogService = inject(DialogService);
   private router = inject(Router);
+
   productParams = new ShopParams();
   totalItems = 0;
+
   columns = [
     { field: 'id', header: 'No.' },
     { field: 'name', header: 'Product name' },
@@ -36,6 +40,7 @@ export class AdminCatalogComponent {
     { field: 'quantityInStock', header: 'Quantity' },
     { field: 'price', header: 'Price', pipe: 'currency', pipeArgs: 'USD' },
   ];
+
   actions = [
     {
       label: 'Edit',
@@ -62,6 +67,14 @@ export class AdminCatalogComponent {
       },
     },
     {
+      label: 'Add photo',
+      icon: 'upload',
+      tooltip: 'Add photo product',
+      action: (row: any) => {
+        this.openAddPhotoDialog(row);
+      },
+    },
+    {
       label: 'View',
       icon: 'visibility',
       tooltip: 'View product',
@@ -70,9 +83,11 @@ export class AdminCatalogComponent {
       },
     },
   ];
+
   ngOnInit(): void {
     this.loadProducts();
   }
+
   loadProducts() {
     this.shopService.getProducts(this.productParams).subscribe({
       next: (response) => {
@@ -83,11 +98,13 @@ export class AdminCatalogComponent {
       },
     });
   }
+
   onPageChange(event: PageEvent) {
     this.productParams.pageNumber = event.pageIndex + 1;
     this.productParams.pageSize = event.pageSize;
     this.loadProducts();
   }
+
   openCreateDialog() {
     const dialog = this.dialog.open(ProductFormComponent, {
       minWidth: '500px',
@@ -108,6 +125,7 @@ export class AdminCatalogComponent {
       },
     });
   }
+
   openEditDialog(product: Product) {
     const dialog = this.dialog.open(ProductFormComponent, {
       minWidth: '500px',
@@ -130,6 +148,17 @@ export class AdminCatalogComponent {
       },
     });
   }
+
+  openAddPhotoDialog(product: Product) {
+    const dialog = this.dialog.open(ProductPhotoComponent, {
+      minWidth: '500px',
+      data: {
+        title: 'Add photo product',
+        product,
+      },
+    });
+  }
+
   async openConfirmDialog(id: number) {
     const confirmed = await this.dialogService.confirm(
       'Confirm delete product',
@@ -137,6 +166,7 @@ export class AdminCatalogComponent {
     );
     if (confirmed) this.onDelete(id);
   }
+
   onDelete(id: number) {
     this.adminService.deleteProduct(id).subscribe({
       next: () => {
@@ -144,6 +174,7 @@ export class AdminCatalogComponent {
       },
     });
   }
+
   openQuantityDialog(product: Product) {
     const dialog = this.dialog.open(UpdateQuantityComponent, {
       minWidth: '500px',
@@ -155,7 +186,6 @@ export class AdminCatalogComponent {
     dialog.afterClosed().subscribe({
       next: async (result) => {
         if (result) {
-          console.log(result);
           await firstValueFrom(
             this.adminService.updateStock(product.id, result.updatedQuantity)
           );

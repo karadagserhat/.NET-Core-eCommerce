@@ -2,6 +2,7 @@ using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Infrastructure;
+using ECommerceBackend.Infrastructure.Helpers;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using Infrastructure.Data;
@@ -14,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 builder.Services.AddControllers();
 builder.Services.AddCors();
 

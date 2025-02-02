@@ -9,8 +9,6 @@ public class CreateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
 
     public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
     {
-
-
         var product = new Domain.Entities.Product
         {
             Name = request.Name,
@@ -23,7 +21,6 @@ public class CreateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
         };
 
         await _unitOfWork.Repository<Domain.Entities.Product>().AddAsync(product);
-
 
         await _unitOfWork.Complete();
 
