@@ -10,6 +10,8 @@ import { RegisterComponent } from './features/account/register/register.componen
 import { authGuard } from './core/guards/auth.guard';
 import { emptyCartGuard } from './core/guards/empty-cart.guard';
 import { CheckoutSuccessComponent } from './features/checkout/checkout-success/checkout-success.component';
+import { AdminComponent } from './features/admin/admin.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'shop', pathMatch: 'full' },
@@ -30,5 +32,10 @@ export const routes: Routes = [
   { path: 'account/register', component: RegisterComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [authGuard, adminGuard],
+  },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];

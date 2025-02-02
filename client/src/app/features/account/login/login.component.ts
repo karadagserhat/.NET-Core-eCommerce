@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -34,8 +34,8 @@ export class LoginComponent {
   }
 
   loginForm = this.fb.group({
-    email: [''],
-    password: [''],
+    email: ['admin@test.com', [Validators.required, Validators.email]],
+    password: ['Password', Validators.required],
   });
 
   onSubmit() {

@@ -1,12 +1,14 @@
 using ECommerceBackend.Application.Features.Commands.Product.CreateProduct;
 using ECommerceBackend.Application.Features.Commands.Product.RemoveProduct;
 using ECommerceBackend.Application.Features.Commands.Product.UpdateProduct;
+using ECommerceBackend.Application.Features.Commands.Product.UpdateStock;
 using ECommerceBackend.Application.Features.Queries.Product.GetAllProducts;
 using ECommerceBackend.Application.Features.Queries.Product.GetByIdProduct;
 using ECommerceBackend.Application.Features.Queries.Product.GetProductsBrands;
 using ECommerceBackend.Application.Features.Queries.Product.GetProductsTypes;
 using ECommerceBackend.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceBackend.API.Controllers;
@@ -32,6 +34,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
 
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpPost]
   public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductCommandRequest createProductCommandRequest)
   {
@@ -39,6 +42,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpPut("{id:int}")]
   public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
   {
@@ -46,6 +50,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok();
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpDelete("{id:int}")]
   public async Task<ActionResult> DeleteProduct([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
   {
@@ -65,6 +70,14 @@ public class ProductsController(IMediator mediator) : ControllerBase
   public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
   {
     GetProductsTypesQueryResponse response = await _mediator.Send(new GetProductsTypesQueryRequest());
+    return Ok(response);
+  }
+
+  [Authorize(Roles = "Admin")]
+  [HttpPut("update-stock/{productId}")]
+  public async Task<ActionResult> UpdateStock([FromBody] UpdateStockCommandRequest updateStockCommandRequest)
+  {
+    UpdateStockCommandResponse response = await _mediator.Send(updateStockCommandRequest);
     return Ok(response);
   }
 }

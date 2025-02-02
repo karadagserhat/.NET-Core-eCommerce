@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.DTOs;
 using ECommerceBackend.Domain.Entities;
@@ -50,7 +51,9 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Address = user.Address
+            Address = user.Address,
+            Roles = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role)
+
         };
     }
 

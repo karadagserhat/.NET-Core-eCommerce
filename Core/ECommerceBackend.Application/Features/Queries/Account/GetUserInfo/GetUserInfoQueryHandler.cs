@@ -23,6 +23,7 @@ internal class GetUserInfoQueryHandler(IAccountService accountService) : IReques
             LastName = account.LastName,
             Email = account.Email,
             Address = account.Address,
+            Roles = account.Roles
         };
     }
 }
