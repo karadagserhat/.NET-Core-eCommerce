@@ -5,6 +5,7 @@
     type="{{ type }}"
     placeholder="{{ label }}"
     matInput
+    autocomplete="{{ autocompleteType }}"
   />
   @if (control.hasError('required')) {
   <mat-error>{{ label }} is required</mat-error>

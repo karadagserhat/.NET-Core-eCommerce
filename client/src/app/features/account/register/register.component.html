@@ -15,9 +15,6 @@
     <div class="mb-3 p-4 bg-red-100 text-red-600">
       <ul class="list-disc px-3">
         <li>{{ validationErrors }}</li>
-        <!-- @for (error of validationErrors; track $index) {
-        <li>{{ error }}</li>
-        } -->
       </ul>
     </div>
     }
@@ -26,7 +23,7 @@
       mat-flat-button
       color="primary"
       type="submit"
-      class="w-full py-2"
+      class="rounded-sm w-full py-2 bg-blue-500 text-white"
     >
       Register
     </button>

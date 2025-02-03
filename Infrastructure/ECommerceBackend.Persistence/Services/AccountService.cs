@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.DTOs;
+using ECommerceBackend.Application.Exceptions;
+using ECommerceBackend.Application.Helpers;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -8,11 +10,15 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ECommerceBackend.Persistence.Services;
 
-public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor) : IAccountService
+public class AccountService(IMailService mailService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor) : IAccountService
 {
+    readonly SignInManager<AppUser> _signInManager = signInManager;
+    readonly UserManager<AppUser> _userManager = userManager;
+    readonly IMailService _mailService = mailService;
+
     public async Task<AddressDto> CreateOrUpdateAddress(AddressDto addressDto)
     {
-        var user = await signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
+        var user = await _signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
 
         if (user.Address == null)
         {
@@ -23,10 +29,11 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
             user.Address.UpdateFromDto(addressDto);
         }
 
-        var result = await signInManager.UserManager.UpdateAsync(user);
+        var result = await _signInManager.UserManager.UpdateAsync(user);
 
         if (!result.Succeeded)
             throw new Exception("Problem updating user address");
+
         return user.Address.ToDto()!;
     }
 
@@ -44,7 +51,7 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
     {
         if (httpContextAccessor.HttpContext.User.Identity?.IsAuthenticated == false) return null!;
 
-        var user = await signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
+        var user = await _signInManager.UserManager.GetUserByEmailWithAddress(httpContextAccessor.HttpContext.User);
 
         return new GetUserInfoDTO
         {
@@ -53,13 +60,12 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
             Email = user.Email,
             Address = user.Address,
             Roles = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role)
-
         };
     }
 
     public async Task LogoutUserAsync()
     {
-        await signInManager.SignOutAsync();
+        await _signInManager.SignOutAsync();
     }
 
     public async Task<RegisterUserResponseDTO> RegisterUserAsync(RegisterDTO registerDto)
@@ -71,23 +77,59 @@ public class AccountService(SignInManager<AppUser> signInManager, IHttpContextAc
             Email = registerDto.Email,
             UserName = registerDto.Email
         };
-
-        var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
+        var result = await _signInManager.UserManager.CreateAsync(user, registerDto.Password);
 
         RegisterUserResponseDTO response = new() { Succeeded = result.Succeeded };
 
         if (result.Succeeded)
         {
             await signInManager.SignInAsync(user, isPersistent: false);
-
             response.Message = "Registration successfully.";
         }
         else
-        {
             foreach (var error in result.Errors)
                 response.Message += $"{error.Code} - {error.Description}\n";
-        }
 
         return response;
+    }
+
+    public async Task PasswordResetAsync(string email)
+    {
+        AppUser? user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            resetToken = resetToken.UrlEncode();
+
+            await _mailService.SendPasswordResetMailAsync(email, user.Id, resetToken);
+        }
+    }
+
+    public async Task<bool> VerifyResetTokenAsync(string resetToken, string userId)
+    {
+        AppUser? user = await _userManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            resetToken = resetToken.UrlDecode();
+
+            return await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", resetToken);
+        }
+        return false;
+    }
+
+    public async Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
+    {
+        AppUser? user = await _userManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            resetToken = resetToken.UrlDecode();
+
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+            if (result.Succeeded)
+                await _userManager.UpdateSecurityStampAsync(user);
+            else
+                throw new PasswordChangeFailedException();
+        }
     }
 }

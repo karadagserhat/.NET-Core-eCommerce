@@ -24,6 +24,8 @@ public static class ServiceRegistration
         services.AddSingleton<ICartService, CartService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<IMailService, MailService>();
+
         services.AddSingleton<IResponseCacheService, ResponseCacheService>();
 
         services.AddTransient<IProductHubService, ProductHubService>();

@@ -88,7 +88,8 @@ builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
                 options.Password.RequireUppercase = false;
             })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ECommerceBackendDbContext>();
+    .AddEntityFrameworkStores<ECommerceBackendDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 

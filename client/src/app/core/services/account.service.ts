@@ -55,4 +55,29 @@ export class AccountService {
       this.baseUrl + 'account/auth-status'
     );
   }
+
+  passwordReset(email: string) {
+    return this.http.post(this.baseUrl + 'account/password-reset', { email });
+  }
+
+  verifyResetToken(resetToken: string, userId: string) {
+    return this.http.post(this.baseUrl + 'account/verify-reset-token', {
+      resetToken,
+      userId,
+    });
+  }
+
+  updatePassword(
+    userId: string,
+    resetToken: string,
+    password: string,
+    passwordConfirm: string
+  ) {
+    return this.http.post(this.baseUrl + 'account/update-password', {
+      resetToken,
+      userId,
+      password,
+      passwordConfirm,
+    });
+  }
 }

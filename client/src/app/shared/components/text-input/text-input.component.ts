@@ -19,6 +19,8 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'text';
 
+  autocompleteType = this.type === 'email' ? 'email' : 'off';
+
   constructor(@Self() public controlDir: NgControl) {
     this.controlDir.valueAccessor = this;
   }

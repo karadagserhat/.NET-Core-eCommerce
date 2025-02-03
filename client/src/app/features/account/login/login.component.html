@@ -22,8 +22,20 @@
         matInput
       />
     </mat-form-field>
-    <button mat-flat-button color="primary" type="submit" class="w-full py-2">
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      class="rounded-sm w-full py-2"
+    >
       Sign in
     </button>
+    <a
+      routerLink="/account/password-reset"
+      mat-flat-button
+      class="block text-center rounded-sm w-full py-2 my-4 bg-slate-400 text-white"
+    >
+      Forgot Password?
+    </a>
   </form>
 </mat-card>
