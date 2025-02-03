@@ -98,6 +98,7 @@ export class AdminCatalogComponent {
   }
 
   loadProducts() {
+    this.productParams.sort = 'updatedDateDesc';
     this.shopService.getProducts(this.productParams).subscribe({
       next: (response) => {
         if (response.data) {
@@ -128,8 +129,6 @@ export class AdminCatalogComponent {
           const product = await firstValueFrom(
             this.adminService.createProduct(result.product)
           );
-          this.snackbarService.success('Product Created!');
-
           if (product) {
             this.products.push(product);
           }

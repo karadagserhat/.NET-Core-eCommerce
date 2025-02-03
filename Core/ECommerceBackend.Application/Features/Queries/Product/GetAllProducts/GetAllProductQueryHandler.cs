@@ -28,15 +28,16 @@ public class GetAllProductQueryHandler(IUnitOfWork unitOfWork, ILogger<GetAllPro
 
         var count = await query.CountAsync(cancellationToken);
 
-
-        query = query.Skip(request.PageSize * (request.PageIndex - 1)).Take(request.PageSize);
-
         query = request.Sort switch
         {
             "priceAsc" => query.OrderBy(x => x.Price),
             "priceDesc" => query.OrderByDescending(x => x.Price),
+            "updatedDateAsc" => query.OrderBy(x => x.UpdatedDate),
+            "updatedDateDesc" => query.OrderByDescending(x => x.UpdatedDate),
             _ => query.OrderBy(x => x.Name)
         };
+
+        query = query.Skip(request.PageSize * (request.PageIndex - 1)).Take(request.PageSize);
 
         var products = await query.ToListAsync(cancellationToken);
 

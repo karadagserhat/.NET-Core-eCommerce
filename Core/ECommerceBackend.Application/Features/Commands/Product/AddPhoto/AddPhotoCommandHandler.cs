@@ -22,8 +22,12 @@ namespace ECommerceBackend.Application.Features.Commands.Product.AddPhoto
             var photo = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
-                PublicId = result.PublicId
+                PublicId = result.PublicId,
+                ProductId = request.ProductId,
+                Product = product
             };
+
+            await _unitOfWork.Repository<Photo>().AddAsync(photo);
 
             product.PictureUrl = photo.Url;
 
