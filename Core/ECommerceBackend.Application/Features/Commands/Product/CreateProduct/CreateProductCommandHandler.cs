@@ -26,7 +26,7 @@ public class CreateProductCommandHandler(IUnitOfWork unitOfWork, IProductHubServ
 
         await _unitOfWork.Complete();
 
-        await _productHubService.ProductAddedMessageAsync($"{request.UserEmail} ...... {request.Name} added product!!!");
+        await _productHubService.ProductAddedMessageAsync($"{request.UserEmail} added product {request.Name}.");
 
         return new()
         {
