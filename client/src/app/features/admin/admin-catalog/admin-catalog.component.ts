@@ -134,6 +134,9 @@ export class AdminCatalogComponent {
           }
         }
       },
+      error: () => {
+        this.snackbarService.error('Product created ERROR!');
+      },
     });
   }
 
@@ -155,7 +158,11 @@ export class AdminCatalogComponent {
           if (index !== -1) {
             this.products[index] = result.product;
           }
+          this.snackbarService.success('Product successfully edited!');
         }
+      },
+      error: () => {
+        this.snackbarService.error('Product edit ERROR!');
       },
     });
   }
@@ -182,6 +189,10 @@ export class AdminCatalogComponent {
     this.adminService.deleteProduct(id).subscribe({
       next: () => {
         this.products = this.products.filter((x) => x.id !== id);
+        this.snackbarService.success('Product successfully deleted!');
+      },
+      error: () => {
+        this.snackbarService.error('Product delete ERROR!');
       },
     });
   }
@@ -204,7 +215,11 @@ export class AdminCatalogComponent {
           if (index !== -1) {
             this.products[index].quantityInStock = result.updatedQuantity;
           }
+          this.snackbarService.success('Product successfully update quantity!');
         }
+      },
+      error: () => {
+        this.snackbarService.error('Product update quantity ERROR!');
       },
     });
   }

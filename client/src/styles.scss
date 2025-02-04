@@ -8,6 +8,8 @@
 
 body {
   font-family: "Josefin Sans", sans-serif;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 // Light theme
@@ -88,6 +90,10 @@ $darkTheme: mat.m2-define-dark-theme(
     background-clip: text !important;
     -webkit-text-fill-color: #432021;
   }
+
+  .nav-bg {
+    background-color: mat.m2-get-color-from-palette($light-background, default);
+  }
 }
 
 .dark-theme {
@@ -128,6 +134,10 @@ $darkTheme: mat.m2-define-dark-theme(
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: #e3e4e5;
+  }
+
+  .nav-bg {
+    background-color: mat.m2-get-color-from-palette($dark-background, default);
   }
 }
 

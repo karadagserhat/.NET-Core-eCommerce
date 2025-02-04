@@ -6,7 +6,7 @@ import {
   MatCardContent,
 } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
@@ -22,11 +22,14 @@ import { CartService } from '../../../core/services/cart.service';
     CurrencyPipe,
     MatButton,
     RouterLink,
+    NgClass,
   ],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.scss',
 })
 export class ProductItemComponent {
   @Input() product?: Product;
+  @Input() displayMode: 'grid' | 'list' = 'grid';
+
   cartService = inject(CartService);
 }

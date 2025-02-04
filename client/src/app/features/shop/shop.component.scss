@@ -1,0 +1,14 @@
+.margin-x {
+  margin-top: 28px;
+  margin-bottom: 28px;
+
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+@media (min-width: 1024px) {
+  .margin-x {
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+}

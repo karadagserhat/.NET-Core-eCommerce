@@ -51,4 +51,9 @@ export class FiltersDialogComponent implements OnInit {
       selectedTypes: this.selectedTypes,
     });
   }
+
+  clearFilters() {
+    this.selectedBrands = [];
+    this.selectedTypes = [];
+  }
 }

@@ -1,19 +1,63 @@
 @if (product) {
 <mat-card
-  class="border"
+  class="border product-card flex overflow-hidden"
+  [ngClass]="{
+    'grid-view': displayMode === 'grid',
+    'list-view flex-row items-center space-x-4 mat-mdc-card-row gap-12':
+      displayMode === 'list'
+  }"
   appearance="raised"
   routerLink="/shop/{{ product.id }}"
-  class="product-card"
 >
-  <img mat-card-image src="{{ product.pictureUrl }}" alt="Product image" />
-  <mat-card-content class="mt-2">
-    <h2 class="text-sm font-semibold uppercase">{{ product.name }}</h2>
-    <p class="font-light">{{ product.price | currency }}</p>
+  <img
+    mat-card-image
+    src="{{ product.pictureUrl }}"
+    alt="Product image"
+    [ngClass]="{
+      'grid-img': displayMode === 'grid',
+      'w-[300px] h-[300px] object-cover rounded-sm': displayMode === 'list'
+    }"
+  />
+  <mat-card-content
+    [ngClass]="{
+      'mat-card-content mt-2': displayMode === 'grid',
+      'flex-grow': displayMode === 'list'
+    }"
+  >
+    <h2
+      class="text-sm font-semibold uppercase"
+      [ngClass]="{
+        'text-center': displayMode === 'grid',
+        'text-left': displayMode === 'list'
+      }"
+    >
+      {{ product.name }}
+    </h2>
+    <p
+      class="font-light"
+      [ngClass]="{
+        'text-center': displayMode === 'grid',
+        'text-left': displayMode === 'list'
+      }"
+    >
+      {{ product.price | currency }}
+    </p>
   </mat-card-content>
-  <mat-card-actions (click)="$event.stopPropagation()">
+  <mat-card-actions
+    [ngClass]="{
+      'w-full': displayMode === 'grid',
+      'ml-auto w-auto': displayMode === 'list'
+    }"
+    (click)="$event.stopPropagation()"
+  >
     <button
       mat-stroked-button
+      color="primary"
       class="w-full"
+      [ngClass]="{
+        '': displayMode === 'grid',
+        'mr-6': displayMode === 'list'
+      }"
       (click)="cartService.addItemToCart(product)"
     >
       <mat-icon>add_shopping_cart</mat-icon>

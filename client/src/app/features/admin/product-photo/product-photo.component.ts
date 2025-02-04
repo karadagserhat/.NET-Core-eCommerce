@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment.development';
 import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf } from '@angular/common';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-product-photo',
@@ -38,6 +39,8 @@ export class ProductPhotoComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<ProductPhotoComponent>);
+  private snackbarService = inject(SnackbarService);
+
   imageUrl: string | null = null;
 
   ngOnInit(): void {
@@ -83,8 +86,10 @@ export class ProductPhotoComponent implements OnInit {
 
         if (status === 200) {
           this.dialogRef.close({ success: true });
+          this.snackbarService.success('Product sucessfully added photo!');
         } else {
           console.error('Dosya yüklenirken bir hata oluştu:', response);
+          this.snackbarService.error('Product added photo ERROR!');
         }
       };
 

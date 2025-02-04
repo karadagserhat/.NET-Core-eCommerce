@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ShopService } from '../../core/services/shop.service';
 import { Product } from '../../shared/models/product';
 import { ProductItemComponent } from './product-item/product-item.component';
@@ -16,6 +16,7 @@ import { ShopParams } from '../../shared/models/shopParams';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Pagination } from '../../shared/models/pagination';
 import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-shop',
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     MatMenuTrigger,
     MatPaginator,
     FormsModule,
+    NgClass,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
@@ -105,5 +107,22 @@ export class ShopComponent {
         }
       },
     });
+  }
+
+  // Grid - List Layout
+  viewMode: 'grid' | 'list' = 'grid';
+  setGrid() {
+    this.viewMode = 'grid';
+  }
+
+  setList() {
+    this.viewMode = 'list';
+  }
+
+  setActiveStyles(mode: 'grid' | 'list') {
+    return {
+      'text-blue-500': this.viewMode === mode,
+      'text-gray-500': this.viewMode !== mode,
+    };
   }
 }

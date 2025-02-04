@@ -7,9 +7,13 @@
   cursor: pointer;
 }
 
-mat-card img {
+.grid-img {
   width: 100%;
   height: 300px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.mat-mdc-card-row {
+  flex-direction: row;
 }

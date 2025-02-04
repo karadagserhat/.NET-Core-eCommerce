@@ -6,12 +6,14 @@ import { Routes } from '@angular/router';
 import { CartComponent } from './features/cart/cart.component';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
+import { OrderComponent } from './features/order/order.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'shop', pathMatch: 'full' },
   { path: 'shop', component: ShopComponent },
   { path: 'shop/:id', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'orders', component: OrderComponent },
   {
     path: 'checkout',
     loadChildren: () =>
